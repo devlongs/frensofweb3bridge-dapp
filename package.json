@@ -11,6 +11,7 @@
     "react-dom": "^18.1.0",
     "react-moralis": "^1.4.0",
     "react-scripts": "^4.0.3",
+    "react-toastify": "4.1",
     "web-vitals": "^2.1.4",
     "web3uikit": "^0.1.157"
   },
