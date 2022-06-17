@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Moralis from "moralis";
 import { useMoralis, useWeb3Transfer } from "react-moralis";
-import { ConnectButton, useNotification, Loading } from "web3uikit";
+import { ConnectButton, Loading } from "web3uikit";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const { isAuthenticated } = useMoralis();
@@ -13,37 +14,47 @@ function App() {
   });
 
   const [transactionSuccess, setTransactionSuccess] = useState(false);
+  const [transactionFailure, setTransactionFailure] = useState(false);
 
-  const dispatch = useNotification();
+  const onInvalidNotification = () =>
+    toast.error("Please, enter a valid amount to donate", {
+      duration: 5000,
+    });
 
   const handleInvalidAmount = () => {
-    dispatch({
-      type: "error",
-      message: "Please, enter a valid amount to donate",
-      title: "Invalid Amount",
-
-      position: "topL",
-    });
+    onInvalidNotification();
   };
+
+  const onSomethingWentWrong = () =>
+    toast.error("Transaction failed!", {
+      duration: 5000,
+    });
+  const somethingWentWrong = () => {
+    onSomethingWentWrong();
+  };
+
+  const onSuccessNotification = () =>
+    toast.success("Donation recieved successfully.", {
+      duration: 9000,
+    });
+
+  const thankYouMessage = () =>
+    toast.success("Thank you for donating to web3bridge 🙏.", {
+      duration: 9000,
+    });
 
   const transactionSuccessfulNotification = () => {
-    dispatch({
-      type: "success",
-      message: "Thank you for donating to web3bridge.",
-      title: "Donation Succesful!",
-
-      position: "topL",
-    });
+    onSuccessNotification();
+    setTimeout(() => thankYouMessage(), 9000);
   };
 
-  const handleNotLogin = () => {
-    dispatch({
-      type: "error",
-      message: "Please, connect with metamask to continue",
-      title: "Login",
-
-      position: "topL",
+  const onNotLogin = () =>
+    toast.error("Please, connect with metamask to continue", {
+      duration: 5000,
     });
+
+  const handleNotLogin = () => {
+    onNotLogin();
   };
 
   const handleDonate = async () => {
@@ -52,13 +63,20 @@ function App() {
     } else if (isAuthenticated && Number(amount) === 0) {
       handleInvalidAmount();
     } else {
-      setTransactionSuccess(true);
-      let transactionReceipt = await fetch();
-      console.log("Transaction", transactionReceipt);
-      let transactionResult = await transactionReceipt.wait();
-      console.log("transaction result", transactionResult);
-      transactionReceipt && setTransactionSuccess(false);
-      transactionReceipt && transactionSuccessfulNotification();
+      try {
+        setTransactionSuccess(true);
+        let transactionReceipt = await fetch();
+        console.log("Transaction", transactionReceipt);
+        let transactionResult = await transactionReceipt.wait();
+        console.log("transaction result", transactionResult);
+        transactionReceipt && setTransactionSuccess(false);
+        transactionReceipt && transactionSuccessfulNotification();
+      } catch (err) {
+        console.log("something went wrong", err);
+        setTransactionFailure(true);
+        !transactionFailure && somethingWentWrong();
+        setTransactionSuccess(false);
+      }
     }
 
     setAmount("");
@@ -110,6 +128,7 @@ function App() {
             "Donate"
           )}
         </button>
+        <Toaster />
       </div>
 
       <footer>© Handcrafted from scratch with 💖 by devlongs.</footer>

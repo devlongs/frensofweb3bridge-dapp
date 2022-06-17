@@ -12,9 +12,7 @@ root.render(
       appId="i0C9apvK4eaYPZpkMmsEsE953r0V5CpTMivqZeim"
       serverUrl="https://yjii7wxsmnzn.usemoralis.com:2053/server"
     >
-      <NotificationProvider>
-        <App />
-      </NotificationProvider>
+      <App />
     </MoralisProvider>
   </React.StrictMode>
 );
