@@ -29,7 +29,7 @@ function App() {
   const transactionSuccessfulNotification = () => {
     dispatch({
       type: "success",
-      message: "Thank you for donating to web3bridge...",
+      message: "Thank you for donating to web3bridge.",
       title: "Donation Succesful!",
 
       position: "topL",
