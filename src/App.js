@@ -39,8 +39,9 @@ function App() {
     });
 
   const thankYouMessage = () =>
-    toast.success("Thank you for donating to web3bridge 🙏.", {
+    toast.success("Thank you for donating to web3bridge", {
       duration: 9000,
+      icon: "👏",
     });
 
   const transactionSuccessfulNotification = () => {
