@@ -47,6 +47,7 @@ function App() {
   const transactionSuccessfulNotification = () => {
     onSuccessNotification();
     setTimeout(() => thankYouMessage(), 9000);
+    setTimeout(() => window.location.reload(), 11000);
   };
 
   const onNotLogin = () =>
