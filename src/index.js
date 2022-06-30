@@ -8,8 +8,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <MoralisProvider
-      appId="i0C9apvK4eaYPZpkMmsEsE953r0V5CpTMivqZeim"
-      serverUrl="https://yjii7wxsmnzn.usemoralis.com:2053/server"
+      appId="QDDcI1iLWsVuTLvFfHyng911stwshWsLM68iZQoJ"
+      serverUrl="https://82nhufnjhogx.usemoralis.com:2053/server"
     >
       <App />
     </MoralisProvider>
